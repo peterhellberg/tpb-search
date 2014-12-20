@@ -11,5 +11,9 @@ assets: clean
 clean:
 	rm -f $(BINARY) assets.go
 
+deps:
+	go get -u github.com/gorilla/mux
+	go get -u github.com/blevesearch/bleve
+
 run: $(BINARY)
 	./$(BINARY)
