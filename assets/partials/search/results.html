@@ -1,0 +1,25 @@
+<h3>Results</h3>
+<h5>(1 - {{results.hits.length}} of {{results.total_hits}}) took {{results.roundTook}}</h5>
+
+<div class="pull-right"><input type="checkbox" ng-model="explainScoring">&nbsp;Explain Scoring</div>
+
+<ol>
+  <li ng-repeat="hit in results.hits"><b>{{hit.id}}</b> <span class="badge">{{hit.roundedScore}}</span>
+  <strong><a href="/api/tpb/{{hit.id}}.magnet">Magnet</a></strong>
+  <div>{{hit.document}}</div>
+  <div class="well">
+    <div ng-repeat="(fieldName, fragments) in hit.fragments">
+      <strong ng-show="fragments.length > 0">{{fieldName}}</strong>
+      <ul>
+        <li ng-repeat="fragment in fragments" ng-bind-html="fragment"></li>
+      </ul>
+    </div>
+    <div class="explanation" ng-show="explainScoring">
+      <small>
+        <strong>Scoring</strong>
+        <ul><li><span ng-bind-html="hit.explanationStringSafe"></span></li></ul>
+      </small>
+    </div>
+  </div>
+  </li>
+</ol>
