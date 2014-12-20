@@ -45,6 +45,7 @@ Usage of ./tpb:
 ## Third party packages
 
  - [bleve](https://godoc.org/github.com/blevesearch/bleve)
+ - [bleve/http](https://godoc.org/github.com/blevesearch/bleve/http)
  - [gorilla/mux](https://godoc.org/github.com/gorilla/mux)
 
 ## License
