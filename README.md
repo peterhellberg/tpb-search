@@ -1,6 +1,6 @@
 # TPB Search
 
-[![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/peterhellberg/tpb#mit-license)
+[![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/peterhellberg/tpb#license)
 
 Locally index and search database dumps from
 [The Pirate Bay](http://en.wikipedia.org/wiki/The_Pirate_Bay) using the
@@ -47,7 +47,7 @@ Usage of ./tpb:
  - [bleve](https://godoc.org/github.com/blevesearch/bleve)
  - [gorilla/mux](https://godoc.org/github.com/gorilla/mux)
 
-## MIT License
+## License
 
 *Copyright (C) 2014 Peter Hellberg*
 
