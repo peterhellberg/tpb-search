@@ -19,7 +19,6 @@ var (
 	batchSize  = flag.Int("batchSize", 800, "batch size for indexing")
 	indexLimit = flag.Int("limit", 0, "index limit")
 	indexPath  = flag.String("index", "tpb.index", "index path")
-	staticPath = flag.String("static", "static/", "path to the static content")
 
 	expvars = expvar.NewMap("metrics")
 
