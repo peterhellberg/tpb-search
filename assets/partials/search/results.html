@@ -4,22 +4,27 @@
 <div class="pull-right"><input type="checkbox" ng-model="explainScoring">&nbsp;Explain Scoring</div>
 
 <ol>
-  <li ng-repeat="hit in results.hits"><b>{{hit.id}}</b> <span class="badge">{{hit.roundedScore}}</span>
-  <strong><a href="/api/tpb/{{hit.id}}.magnet">Magnet</a></strong>
-  <div>{{hit.document}}</div>
-  <div class="well">
-    <div ng-repeat="(fieldName, fragments) in hit.fragments">
-      <strong ng-show="fragments.length > 0">{{fieldName}}</strong>
-      <ul>
-        <li ng-repeat="fragment in fragments" ng-bind-html="fragment"></li>
-      </ul>
+  <li ng-repeat="hit in results.hits">
+    <b><a target="_self" href="/api/tpb/{{hit.id}}">{{hit.id}}</a></b>
+    <span class="badge">{{hit.roundedScore}}</span>
+    <b><a href="magnet:?xt=urn:btih:{{hit.id}}&dn={{hit.fields.name | encode}}&tr=udp://tracker.publicbt.com:80/announce&tr=udp://tracker.openbittorrent.com:80/announce&tr=udp://tracker.istole.it:80/announce&tr=udp://tracker.torrentbox.com:2710/announce">Magnet</a></b>
+
+    <div class="hit">
+      <h4><strong>{{hit.fields.category}}</strong> {{hit.fields.name}}</h4>
+
+      <div class="explanation" ng-show="explainScoring">
+        <small>
+          <strong>Fragments</strong>
+          <div ng-repeat="(fieldName, fragments) in hit.fragments">
+            <em ng-show="fragments.length > 0">{{fieldName}}</em>
+            <ul>
+              <li ng-repeat="fragment in fragments" ng-bind-html="fragment"></li>
+            </ul>
+          </div>
+          <strong>Scoring</strong>
+          <ul><li><span ng-bind-html="hit.explanationStringSafe"></span></li></ul>
+        </small>
+      </div>
     </div>
-    <div class="explanation" ng-show="explainScoring">
-      <small>
-        <strong>Scoring</strong>
-        <ul><li><span ng-bind-html="hit.explanationStringSafe"></span></li></ul>
-      </small>
-    </div>
-  </div>
   </li>
 </ol>

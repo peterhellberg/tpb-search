@@ -32,7 +32,7 @@ function SearchCtrl($scope, $http, $routeParams, $log, $sce) {
 
   updateFieldNames = function() {
     $http.get('/api/fields').success(function(data) {
-        $scope.fieldNames = data.fields;
+      $scope.fieldNames = data.fields;
     }).error(function(data, code) {
     });
   };
@@ -43,7 +43,8 @@ function SearchCtrl($scope, $http, $routeParams, $log, $sce) {
     $http.post('/api/search', {
       "size": 10,
       "explain": true,
-      "highlight":{},
+      "highlight":{"fields":["name"]},
+      "fields":["*"],
       "query": {
         "term":  $scope.term,
         "field": $scope.field,
@@ -58,7 +59,8 @@ function SearchCtrl($scope, $http, $routeParams, $log, $sce) {
     $http.post('/api/search', {
       "size": 10,
       "explain": true,
-      "highlight":{},
+      "highlight":{"fields":["name"]},
+      "fields":["*"],
       "query": {
         "prefix": $scope.prefix,
         "field":  $scope.field,
@@ -70,50 +72,53 @@ function SearchCtrl($scope, $http, $routeParams, $log, $sce) {
   };
 
   $scope.searchMatch = function() {
-      $http.post('/api/search', {
-          "size": 10,
-          "explain": true,
-          "highlight":{},
-          "query": {
-              "boost": 1.0,
-              "match": $scope.match,
-              "field": $scope.field,
-              "prefix_length": parseInt($scope.prefix_length,10),
-              "fuzziness": parseInt($scope.fuzziness,10)
-          }
-      }).
+    $http.post('/api/search', {
+      "size": 10,
+      "explain": true,
+      "highlight":{"fields":["name"]},
+      "fields":["*"],
+      "query": {
+        "boost": 1.0,
+        "match": $scope.match,
+        "field": $scope.field,
+        "prefix_length": parseInt($scope.prefix_length,10),
+        "fuzziness": parseInt($scope.fuzziness,10)
+      }
+    }).
       success(function(data) {
-          $scope.processResults(data);
-      }).
+      $scope.processResults(data);
+    }).
       error(function(data, code) {
 
-      });
+    });
   };
 
   $scope.searchMatchPhrase = function() {
-      $http.post('/api/search', {
-          "size": 10,
-          "explain": true,
-          "highlight":{},
-          "query": {
-              "boost": 1.0,
-              "match_phrase": $scope.matchphrase,
-              "field": $scope.field,
-          }
-      }).
+    $http.post('/api/search', {
+      "size": 10,
+      "explain": true,
+      "highlight":{"fields":["name"]},
+      "fields":["*"],
+      "query": {
+        "boost": 1.0,
+        "match_phrase": $scope.matchphrase,
+        "field": $scope.field,
+      }
+    }).
       success(function(data) {
-          $scope.processResults(data);
-      }).
+      $scope.processResults(data);
+    }).
       error(function(data, code) {
 
-      });
+    });
   };
 
   $scope.searchSyntax = function() {
     $http.post('/api/search', {
       "size": 10,
       "explain": true,
-      "highlight":{},
+      "highlight":{"fields":["name"]},
+      "fields":["*"],
       "query": {
         "boost": 1.0,
         "query": $scope.syntax,
@@ -125,14 +130,16 @@ function SearchCtrl($scope, $http, $routeParams, $log, $sce) {
   };
 
   $scope.expl = function(explanation) {
-          rv = "" + $scope.roundScore(explanation.value) + " - " + explanation.message;
-          rv = rv + "<ul>";
-          for(var i in explanation.children) {
-                  child = explanation.children[i];
-                  rv = rv + "<li>" + $scope.expl(child) + "</li>";
-          }
-          rv = rv + "</ul>";
-          return rv;
+    rv = "" + $scope.roundScore(explanation.value) + " - " + explanation.message;
+    rv = rv + "<ul>";
+
+    for(var i in explanation.children) {
+      child = explanation.children[i];
+      rv = rv + "<li>" + $scope.expl(child) + "</li>";
+    }
+
+    rv = rv + "</ul>";
+    return rv;
   };
 
   $scope.roundScore = function(score) {
@@ -193,149 +200,151 @@ function SearchCtrl($scope, $http, $routeParams, $log, $sce) {
     $scope.results.roundTook = $scope.roundTook(data.took);
   };
 
-    $scope.searchPhrase = function() {
-        delete $scope.results;
-        if($scope.phraseTerms.length < 1) {
-                $scope.errorMessage = "Query requires at least one term";
-                return;
-        }
-        var requestBody = {
-                "query": {
-                        "terms": [],
-                        "boost": 1.0,
-                },
-                "highlight":{},
-                explain: true,
-                size: parseInt($scope.size, 10)
+  $scope.searchPhrase = function() {
+    delete $scope.results;
+    if($scope.phraseTerms.length < 1) {
+      $scope.errorMessage = "Query requires at least one term";
+      return;
+    }
+    var requestBody = {
+      "query": {
+        "terms": [],
+        "boost": 1.0,
+      },
+      "highlight":{"fields":["name"]},
+      "fields":["*"],
+      explain: true,
+      size: parseInt($scope.size, 10)
+    };
+    for(var i in $scope.phraseTerms) {
+      var term = $scope.phraseTerms[i];
+      if (term !== null) {
+        var termQuery = {
+          "term": term,
+          "field": $scope.phraseField,
+          "boost": 1.0,
         };
-        for(var i in $scope.phraseTerms) {
-                var term = $scope.phraseTerms[i];
-                if (term !== null) {
-                    var termQuery = {
-                        "term": term,
-                        "field": $scope.phraseField,
-                        "boost": 1.0,
-                    };
-                    requestBody.query.terms.push(termQuery);
-                } else {
-                    requestBody.query.terms.push(null);
-                }
+        requestBody.query.terms.push(termQuery);
+      } else {
+        requestBody.query.terms.push(null);
+      }
 
-        }
+    }
 
-        $http.post('/api/search', requestBody).
-        success(function(data) {
-            $scope.processResults(data);
-        }).
-        error(function(data, code) {
-                $scope.errorMessage = data;
-                return;
-        });
+    $http.post('/api/search', requestBody).
+      success(function(data) {
+      $scope.processResults(data);
+    }).
+      error(function(data, code) {
+      $scope.errorMessage = data;
+      return;
+    });
+  };
+
+  $scope.removeClause = function(index) {
+    $scope.clauses.splice(index, 1);
+  };
+
+  $scope.addClause = function() {
+
+    if($scope.clauseTerm === "") {
+      $scope.errorMessage = "Clause term cannot be empty";
+      return;
+    }
+
+    if($scope.clauseOccur === "") {
+      $scope.errorMessage = "Select clause occur";
+      return;
+    }
+
+    if($scope.clauseField === "") {
+      $scope.errorMessage = "Select a field";
+      return;
+    }
+
+    if($scope.clauseBoost === "") {
+      $scope.errorMessage = "Clause boost cannot be empty";
+      return;
+    }
+
+    clause = {
+      "term": $scope.clauseTerm,
+      "occur": $scope.clauseOccur,
+      "field": $scope.clauseField,
+      "boost": $scope.clauseBoost
     };
 
-    $scope.removeClause = function(index) {
-        $scope.clauses.splice(index, 1);
+    $scope.clauses.push(clause);
+
+    // reset form
+    delete $scope.errorMessage;
+    resetSchema();
+  };
+
+  $scope.searchBoolean = function() {
+    delete $scope.results;
+    if($scope.clauses.length < 1) {
+      $scope.errorMessage = "Query requires at least one clause";
+      return;
+    }
+    var requestBody = {
+      "query": {
+        "must": {
+          "conjuncts":[],
+          "boost": 1.0,
+        },
+        "should":{
+          "disjuncts":[],
+          "boost": 1.0,
+          "min": parseInt($scope.minShould, 10)
+        },
+        "must_not": {
+          "disjuncts": [],
+          "boost": 1.0,
+        },
+        "boost": 1.0,
+      },
+      explain: true,
+      "highlight":{"fields":["name"]},
+      "fields":["*"],
+      size: parseInt($scope.size, 10)
     };
+    for(var i in $scope.clauses) {
+      var clause = $scope.clauses[i];
+      var termQuery = {
+        "term": clause.term,
+        "field": clause.field,
+        "boost": parseFloat(clause.boost),
+      };
+      switch(clause.occur) {
+        case "MUST":
+          requestBody.query.must.conjuncts.push(termQuery);
+        break;
+        case "SHOULD":
+          requestBody.query.should.disjuncts.push(termQuery);
+        break;
+        case "MUST NOT":
+          requestBody.query.must_not.disjuncts.push(termQuery);
+        break;
+      }
+    }
+    if (requestBody.query.must.conjuncts.length === 0) {
+      delete requestBody.query.must;
+    }
+    if (requestBody.query.should.disjuncts.length === 0) {
+      delete requestBody.query.should;
+    }
+    if (requestBody.query.must_not.disjuncts.length === 0) {
+      delete requestBody.query.must_not;
+    }
 
-    $scope.addClause = function() {
-
-        if($scope.clauseTerm === "") {
-                $scope.errorMessage = "Clause term cannot be empty";
-                return;
-        }
-
-        if($scope.clauseOccur === "") {
-                $scope.errorMessage = "Select clause occur";
-                return;
-        }
-
-        if($scope.clauseField === "") {
-                $scope.errorMessage = "Select a field";
-                return;
-        }
-
-        if($scope.clauseBoost === "") {
-                $scope.errorMessage = "Clause boost cannot be empty";
-                return;
-        }
-
-        clause = {
-                "term": $scope.clauseTerm,
-                "occur": $scope.clauseOccur,
-                "field": $scope.clauseField,
-                "boost": $scope.clauseBoost
-        };
-
-        $scope.clauses.push(clause);
-
-        // reset form
-        delete $scope.errorMessage;
-        resetSchema();
-    };
-
-    $scope.searchBoolean = function() {
-        delete $scope.results;
-        if($scope.clauses.length < 1) {
-                $scope.errorMessage = "Query requires at least one clause";
-                return;
-        }
-        var requestBody = {
-                "query": {
-                        "must": {
-                                "conjuncts":[],
-                                "boost": 1.0,
-                        },
-                        "should":{
-                                "disjuncts":[],
-                                "boost": 1.0,
-                                "min": parseInt($scope.minShould, 10)
-                        },
-                        "must_not": {
-                                "disjuncts": [],
-                                "boost": 1.0,
-                        },
-                        "boost": 1.0,
-                },
-                explain: true,
-                "highlight":{},
-                size: parseInt($scope.size, 10)
-        };
-        for(var i in $scope.clauses) {
-                var clause = $scope.clauses[i];
-                var termQuery = {
-                        "term": clause.term,
-                        "field": clause.field,
-                        "boost": parseFloat(clause.boost),
-                };
-                switch(clause.occur) {
-                        case "MUST":
-                        requestBody.query.must.conjuncts.push(termQuery);
-                        break;
-                        case "SHOULD":
-                        requestBody.query.should.disjuncts.push(termQuery);
-                        break;
-                        case "MUST NOT":
-                        requestBody.query.must_not.disjuncts.push(termQuery);
-                        break;
-                }
-        }
-        if (requestBody.query.must.conjuncts.length === 0) {
-                delete requestBody.query.must;
-        }
-        if (requestBody.query.should.disjuncts.length === 0) {
-                delete requestBody.query.should;
-        }
-        if (requestBody.query.must_not.disjuncts.length === 0) {
-                delete requestBody.query.must_not;
-        }
-
-        $http.post('/api/search', requestBody).
-        success(function(data) {
-            $scope.processResults(data);
-        }).
-        error(function(data, code) {
-                $scope.errorMessage = data;
-                return;
-        });
-    };
+    $http.post('/api/search', requestBody).
+      success(function(data) {
+      $scope.processResults(data);
+    }).
+      error(function(data, code) {
+      $scope.errorMessage = data;
+      return;
+    });
+  };
 }

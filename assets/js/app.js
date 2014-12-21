@@ -2,11 +2,11 @@
 
 angular.module('tpbApp', [
   'ngRoute',
-  'tpbApp.filters',
   'tpbApp.controllers',
   'expvar'
 ]).
-config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+config(['$compileProvider', '$routeProvider', '$locationProvider', function($compileProvider, $routeProvider, $locationProvider) {
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|magnet):/);
   $routeProvider.when('/search/', {templateUrl: '/static/partials/search/search.html', controller: 'SearchCtrl'});
   $routeProvider.when('/search/term/', {templateUrl: '/static/partials/search/term.html', controller: 'SearchCtrl'});
   $routeProvider.when('/search/match/', {templateUrl: '/static/partials/search/match.html', controller: 'SearchCtrl'});
@@ -19,15 +19,8 @@ config(['$routeProvider', '$locationProvider', function($routeProvider, $locatio
   $routeProvider.when('/about/', {templateUrl: '/static/partials/about.html', controller: 'AboutCtrl'});
   $routeProvider.otherwise({redirectTo: '/search/'});
   $locationProvider.html5Mode(true);
-}]);
+}]).filter('encode', function() {
+  return window.encodeURIComponent;
+});
 
-angular.module('tpbApp.controllers', [])
-  .controller('AboutCtrl', ['$scope', function($scope) {
-  }]);
-
-angular.module('tpbApp.filters', []).
-  filter('interpolate', ['version', function(version) {
-    return function(text) {
-      return String(text).replace(/\%VERSION\%/mg, version);
-    };
-  }]);
+angular.module('tpbApp.controllers', []).controller('AboutCtrl', ['$scope', function($scope) {}]);
