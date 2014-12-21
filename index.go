@@ -100,7 +100,7 @@ func indexTPB(i bleve.Index) error {
 			log.Printf("Indexed %d documents in %.2fs (average %.2fms/doc)", count, indexDurationSeconds, timePerDoc/float64(time.Millisecond))
 		}
 
-		if count >= 5000 {
+		if *indexLimit > 0 && count >= *indexLimit {
 			break
 		}
 	}
