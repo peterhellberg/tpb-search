@@ -2,21 +2,15 @@ package main
 
 import (
 	"encoding/csv"
+	"fmt"
 	"io"
 	"log"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/blevesearch/bleve"
 )
-
-type tpbDoc struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
-	Size string `json:"size"`
-	Hash string `json:"hash"`
-	Type string `json:"type"`
-}
 
 func buildIndexMapping() *bleve.IndexMapping {
 	// a generic reusable mapping for english text
@@ -40,6 +34,14 @@ func buildIndexMapping() *bleve.IndexMapping {
 	return im
 }
 
+type tpbDoc struct {
+	Name     string `json:"name"`
+	Size     int64  `json:"size"`
+	Hash     string `json:"hash"`
+	Category string `json:"category"`
+	Type     string `json:"type"`
+}
+
 func indexTPB(i bleve.Index) error {
 	log.Printf("Indexing...")
 
@@ -54,18 +56,30 @@ func indexTPB(i bleve.Index) error {
 
 	reader := csv.NewReader(dumpFile)
 	reader.LazyQuotes = true
-	reader.FieldsPerRecord = 6
+	reader.FieldsPerRecord = 7
 	reader.Comma = '|'
 
 	for {
-		record, err := reader.Read()
+		r, err := reader.Read()
 		if err == io.EOF {
 			break
 		} else if err != nil {
 			continue
 		}
 
-		batch.Index(record[0], tpbDoc{record[0], record[1], record[2], record[5], "torrent"})
+		size, err := strconv.ParseInt(r[1], 10, 0)
+		if err != nil {
+			fmt.Println("%#v", size)
+			size = 0
+		}
+
+		batch.Index(r[2], tpbDoc{
+			Name:     r[0],
+			Size:     size,
+			Hash:     r[2],
+			Category: r[4],
+			Type:     "torrent",
+		})
 		batchCount++
 
 		if batchCount >= *batchSize {

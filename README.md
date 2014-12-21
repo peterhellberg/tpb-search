@@ -3,7 +3,7 @@
 [![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/peterhellberg/tpb#license)
 
 Locally index and search database dumps from
-[The Pirate Bay](http://en.wikipedia.org/wiki/The_Pirate_Bay) using the
+[The Open Bay](http://openbay.isohunt.to/) using the
 [bleve](https://github.com/couchbaselabs/bleve) text indexing library.
 
 Based on the example applications
@@ -12,14 +12,14 @@ Based on the example applications
 
 ## Requirements
 
-You need to download a database dump in the following format:
+You need to download an [openbay-db-dump](http://openbay.isohunt.to/files/openbay-db-dump.torrent)
+
+It should have the following format:
 
 ```
-1234567|Name of the first file|54321|0|1|f2b2c2e4a786d3924b8922454772d784118e6421
-2345678|Name of the second file|9876|1|1|27a12d50782e1412bcdec126224da29afb23c293
+"Name of the first file"|54321|f2b2c2e4a786d3924b8922454772d784118e6421|8|music|0|0
+"Name of the second file"|9876|27a12d50782e1412bcdec126224da29afb23c293|1|movies|0|0
 ```
-
-You can probably find a database dump using [Google](http://lmgtfy.com/?q=%22thepiratebay-dump%22+%22.txt.gz%22+--bitsnoop)
 
 ## Compilation
 
@@ -35,7 +35,7 @@ make
 ```
 Usage of ./tpb:
   -batchSize=800: batch size for indexing
-  -d="thepiratebay-dump-2014-09-18.txt": the tpb dump file to use
+  -d="torrents_mini.csv": the openbay-db-dump to use
   -h="localhost": http listen host
   -index="tpb.index": index path
   -p=1337: http listen port

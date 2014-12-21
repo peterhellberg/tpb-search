@@ -14,7 +14,7 @@ import (
 var (
 	port = flag.Int("p", 1337, "http listen port")
 	host = flag.String("h", "localhost", "http listen host")
-	dump = flag.String("d", "thepiratebay-dump-2014-09-18.txt", "the tpb dump file to use")
+	dump = flag.String("d", "torrents_mini.csv", "the openbay-db-dump to use")
 
 	batchSize  = flag.Int("batchSize", 800, "batch size for indexing")
 	indexPath  = flag.String("index", "tpb.index", "index path")
@@ -22,7 +22,8 @@ var (
 
 	expvars = expvar.NewMap("metrics")
 
-	bind string
+	bind        string
+	buildCommit string
 )
 
 func main() {
