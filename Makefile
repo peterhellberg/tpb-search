@@ -1,9 +1,9 @@
-BINARY = tpb
+BINARY = tpb-search
 
 all: $(BINARY)
 
 $(BINARY): clean assets
-	go build -ldflags "-X main.buildCommit `git rev-parse --short HEAD`" .
+	go build -ldflags "-X main.buildCommit `git rev-parse --short HEAD`" -o $(BINARY) .
 
 assets: clean
 	go-bindata -o assets.go -prefix "assets/" assets/...

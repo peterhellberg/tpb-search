@@ -1,6 +1,6 @@
 # TPB Search
 
-[![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/peterhellberg/tpb#license)
+[![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/peterhellberg/tpb-search#license)
 
 Locally index and search database dumps from
 [The Open Bay](http://openbay.isohunt.to/) using the
@@ -24,8 +24,8 @@ It should have the following format:
 ## Compilation
 
 ```
-git clone git@github.com:peterhellberg/tpb.git
-cd tpb
+git clone git@github.com:peterhellberg/tpb-search.git
+cd tpb-search
 make deps
 make
 ```
@@ -33,7 +33,7 @@ make
 ## Usage
 
 ```
-Usage of ./tpb:
+Usage of ./tpb-search:
   -batchSize=800: batch size for indexing
   -d="torrents_mini.csv": the openbay-db-dump to use
   -h="localhost": http listen host
