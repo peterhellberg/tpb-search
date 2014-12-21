@@ -5,10 +5,11 @@
 
 <ol>
   <li ng-repeat="hit in results.hits">
-    <b><a href="magnet:?xt=urn:btih:{{hit.id}}&dn={{hit.fields.name | encode}}&tr=udp://tracker.publicbt.com:80/announce&tr=udp://tracker.openbittorrent.com:80/announce&tr=udp://tracker.istole.it:80/announce&tr=udp://tracker.torrentbox.com:2710/announce">{{hit.id}}</a></b>
+    <b>{{hit.fields.category}} <a href="magnet:?xt=urn:btih:{{hit.id}}&dn={{hit.fields.name | encode}}&tr=udp://tracker.publicbt.com:80/announce&tr=udp://tracker.openbittorrent.com:80/announce&tr=udp://tracker.istole.it:80/announce&tr=udp://tracker.torrentbox.com:2710/announce">{{hit.fields.name}}</a></b>
     <span class="badge">{{hit.roundedScore}}</span>
     <div class="hit">
-      <h4><strong>{{hit.fields.category}}</strong> {{hit.fields.name}}</h4>
+      <small>{{hit.fields.hash}}</small>
+
       <div class="explanation" ng-show="explainScoring">
         <small>
           <strong>Fragments</strong>
