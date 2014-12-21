@@ -13,23 +13,20 @@ import (
 )
 
 func buildIndexMapping() *bleve.IndexMapping {
-	// a generic reusable mapping for english text
-	englishTextFieldMapping := bleve.NewTextFieldMapping()
-	englishTextFieldMapping.Analyzer = "en"
-
 	// a generic reusable mapping for keyword text
 	keywordFieldMapping := bleve.NewTextFieldMapping()
 	keywordFieldMapping.Analyzer = "keyword"
 
 	torrentMapping := bleve.NewDocumentMapping()
-	torrentMapping.AddFieldMappingsAt("name", englishTextFieldMapping)
+	torrentMapping.AddFieldMappingsAt("category", keywordFieldMapping)
 
 	im := bleve.NewIndexMapping()
 
 	im.AddDocumentMapping("torrent", torrentMapping)
-
 	im.TypeField = "type"
-	im.DefaultAnalyzer = "en"
+	im.DefaultAnalyzer = "standard"
+	im.DefaultType = "torrent"
+	im.DefaultField = "name"
 
 	return im
 }
