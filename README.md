@@ -10,7 +10,8 @@ Based on the example applications
 [beer-search](https://github.com/blevesearch/beer-search) and
 [bleve-explorer](https://github.com/blevesearch/bleve-explorer)
 
-![Screenshot](http://assets.c7.se/skitch/TPB_Search-20141221-042424.png)
+![Search](http://assets.c7.se/skitch/TPB_Search-20141221-042424.png)
+![Prefix](http://assets.c7.se/skitch/TPB_Search_-_Prefix-20141221-055838.png)
 
 ## Requirements
 
