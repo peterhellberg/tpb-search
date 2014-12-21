@@ -40,11 +40,6 @@ type tpbDoc struct {
 }
 
 func indexTPB(i bleve.Index) error {
-	log.Printf("Indexing...")
-
-	count := 0
-	startTime := time.Now()
-
 	batch := bleve.NewBatch()
 	batchCount := 0
 
@@ -52,9 +47,13 @@ func indexTPB(i bleve.Index) error {
 	defer dumpFile.Close()
 
 	reader := csv.NewReader(dumpFile)
-	reader.LazyQuotes = true
 	reader.FieldsPerRecord = 7
 	reader.Comma = '|'
+
+	count := 0
+	startTime := time.Now()
+
+	log.Printf("Indexing...")
 
 	for {
 		r, err := reader.Read()
