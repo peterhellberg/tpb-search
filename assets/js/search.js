@@ -131,11 +131,11 @@ function SearchCtrl($scope, $http, $routeParams, $log, $sce) {
 
   $scope.expl = function(explanation) {
     rv = "" + $scope.roundScore(explanation.value) + " - " + explanation.message;
-    rv = rv + "<ul>";
+    rv = rv + '<ul class="list-group">';
 
     for(var i in explanation.children) {
       child = explanation.children[i];
-      rv = rv + "<li>" + $scope.expl(child) + "</li>";
+      rv = rv + '<li class="list-group-item">' + $scope.expl(child) + "</li>";
     }
 
     rv = rv + "</ul>";

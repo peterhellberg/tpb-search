@@ -36,6 +36,20 @@ body {
   padding: 0.1em;
 }
 
+.explanation .list-group {
+  font-size: 1rem;
+  font-family: monaco,Consolas,Lucida Console,monospace;
+  margin-bottom: 0;
+}
+
+.explanation .list-group-item {
+  margin-top: 0.3rem;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.5em;
+}
+
 /*
  * Sidebar
  */

@@ -11,17 +11,18 @@
       <small>{{hit.fields.hash}}</small>
 
       <div class="explanation" ng-show="explainScoring">
-        <small>
-          <strong>Fragments</strong>
-          <div ng-repeat="(fieldName, fragments) in hit.fragments">
-            <em ng-show="fragments.length > 0">{{fieldName}}</em>
-            <ul>
-              <li ng-repeat="fragment in fragments" ng-bind-html="fragment"></li>
-            </ul>
-          </div>
-          <strong>Scoring</strong>
-          <ul><li><span ng-bind-html="hit.explanationStringSafe"></span></li></ul>
-        </small>
+        <h5>Fragments</h5>
+        <div ng-repeat="(fieldName, fragments) in hit.fragments">
+          <ul>
+            <li ng-repeat="fragment in fragments" ng-bind-html="fragment"></li>
+          </ul>
+        </div>
+        <h5>Scoring</h5>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <span ng-bind-html="hit.explanationStringSafe"></span>
+          </li>
+        </ul>
       </div>
     </div>
   </li>
