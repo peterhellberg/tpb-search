@@ -10,6 +10,10 @@ Based on the example applications
 [beer-search](https://github.com/blevesearch/beer-search) and
 [bleve-explorer](https://github.com/blevesearch/bleve-explorer)
 
+## Screenshot
+
+![Screenshot](http://assets.c7.se/skitch/TPB_Search-20141221-035956.png)
+
 ## Requirements
 
 You need to download an [openbay-db-dump](http://openbay.isohunt.to/files/openbay-db-dump.torrent)
@@ -34,12 +38,11 @@ make
 
 ```
 Usage of ./tpb-search:
-  -batchSize=800: batch size for indexing
+  -b=800: batch size for indexing
   -d="torrents_mini.csv": the openbay-db-dump to use
   -h="localhost": http listen host
-  -index="tpb.index": index path
+  -i="tpb.index": index path
   -p=1337: http listen port
-  -static="static/": path to the static content
 ```
 
 ## Third party packages
