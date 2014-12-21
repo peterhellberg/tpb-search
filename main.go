@@ -16,9 +16,9 @@ var (
 	host = flag.String("h", "localhost", "http listen host")
 	dump = flag.String("d", "torrents_mini.csv", "the openbay-db-dump to use")
 
-	batchSize  = flag.Int("batchSize", 800, "batch size for indexing")
-	indexLimit = flag.Int("limit", 0, "index limit")
-	indexPath  = flag.String("index", "tpb.index", "index path")
+	batchSize  = flag.Int("b", 800, "batch size for indexing")
+	indexLimit = flag.Int("l", 0, "index limit")
+	indexPath  = flag.String("i", "tpb.index", "index path")
 
 	expvars = expvar.NewMap("metrics")
 
