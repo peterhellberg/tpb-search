@@ -43,6 +43,30 @@ Usage of ./tpb-search:
   -p=1337: http listen port
 ```
 
+### Building an index of the first 10000 rows in the dump:
+
+```bash
+$ GOMAXPROCS=4 make && ./tpb-search -l 10000
+rm -f tpb-search assets.go
+go-bindata -o assets.go -prefix "assets/" assets/...
+go build -ldflags "-X main.buildCommit `git rev-parse --short HEAD`" -o tpb-search .
+2014/12/21 04:45:18 Creating new index...
+2014/12/21 04:45:18 Listening on http://localhost:1337
+2014/12/21 04:45:18 Indexing...
+2014/12/21 04:45:19 Indexed 1000 documents in 1.16s (average 1.16ms/doc)
+2014/12/21 04:45:19 Indexed 2000 documents in 1.47s (average 0.73ms/doc)
+2014/12/21 04:45:20 Indexed 3000 documents in 1.82s (average 0.61ms/doc)
+2014/12/21 04:45:20 Indexed 4000 documents in 2.50s (average 0.63ms/doc)
+2014/12/21 04:45:21 Indexed 5000 documents in 2.91s (average 0.58ms/doc)
+2014/12/21 04:45:21 Indexed 6000 documents in 3.33s (average 0.56ms/doc)
+2014/12/21 04:45:22 Indexed 7000 documents in 3.85s (average 0.55ms/doc)
+2014/12/21 04:45:22 Indexed 8000 documents in 4.79s (average 0.60ms/doc)
+2014/12/21 04:45:23 Indexed 9000 documents in 5.26s (average 0.58ms/doc)
+2014/12/21 04:45:23 Indexed 10000 documents in 5.74s (average 0.57ms/doc)
+2014/12/21 04:45:24 Finished indexing 10000 documents in 6.04s (average 0.60ms/doc)
+2014/12/21 04:45:24 Still listening on http://localhost:1337
+```
+
 ## Third party packages
 
  - [bleve](https://godoc.org/github.com/blevesearch/bleve)
