@@ -23,7 +23,7 @@ function SearchCtrl($scope, $http, $routeParams, $log, $sce) {
   var resetForm = function() {
     $scope.clauses = [];
     $scope.phraseTerms = [];
-    $scope.size = "10";
+    $scope.size = "100";
     $scope.minShould = "0";
     resetSchema();
   };
@@ -41,7 +41,7 @@ function SearchCtrl($scope, $http, $routeParams, $log, $sce) {
 
   $scope.searchTerm = function() {
     $http.post('/api/search', {
-      "size": 10,
+      "size": 100,
       "explain": true,
       "highlight":{"fields":["name"]},
       "fields":["*"],
@@ -57,7 +57,7 @@ function SearchCtrl($scope, $http, $routeParams, $log, $sce) {
 
   $scope.searchPrefix = function() {
     $http.post('/api/search', {
-      "size": 10,
+      "size": 100,
       "explain": true,
       "highlight":{"fields":["name"]},
       "fields":["*"],
@@ -73,7 +73,7 @@ function SearchCtrl($scope, $http, $routeParams, $log, $sce) {
 
   $scope.searchMatch = function() {
     $http.post('/api/search', {
-      "size": 10,
+      "size": 100,
       "explain": true,
       "highlight":{"fields":["name"]},
       "fields":["*"],
@@ -95,7 +95,7 @@ function SearchCtrl($scope, $http, $routeParams, $log, $sce) {
 
   $scope.searchMatchPhrase = function() {
     $http.post('/api/search', {
-      "size": 10,
+      "size": 100,
       "explain": true,
       "highlight":{"fields":["name"]},
       "fields":["*"],
@@ -115,7 +115,7 @@ function SearchCtrl($scope, $http, $routeParams, $log, $sce) {
 
   $scope.searchSyntax = function() {
     $http.post('/api/search', {
-      "size": 10,
+      "size": 100,
       "explain": true,
       "highlight":{"fields":["name"]},
       "fields":["*"],
