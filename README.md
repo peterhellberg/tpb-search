@@ -12,7 +12,7 @@ Based on the example applications
 
 ## Screenshot
 
-![Screenshot](http://assets.c7.se/skitch/TPB_Search-20141221-035956.png)
+![Screenshot](http://assets.c7.se/skitch/TPB_Search-20141221-042424.png)
 
 ## Requirements
 
