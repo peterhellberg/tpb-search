@@ -1,6 +1,7 @@
 package main
 
 import (
+	"compress/gzip"
 	"encoding/csv"
 	"fmt"
 	"io"
@@ -43,8 +44,16 @@ func indexTPB(i bleve.Index) error {
 	batch := bleve.NewBatch()
 	batchCount := 0
 
-	dumpFile, _ := os.Open(*dump)
-	defer dumpFile.Close()
+	gzDumpFile, err := os.Open(*dump)
+	if err != nil {
+		return err
+	}
+	defer gzDumpFile.Close()
+
+	dumpFile, err := gzip.NewReader(gzDumpFile)
+	if err != nil {
+		return err
+	}
 
 	reader := csv.NewReader(dumpFile)
 	reader.FieldsPerRecord = 7
