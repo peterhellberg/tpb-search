@@ -17,7 +17,7 @@ Based on the example applications
 
 You need to download an [openbay-db-dump](http://openbay.isohunt.to/files/openbay-db-dump.torrent)
 
-It should have the following format:
+It should have the following format when gunzipped:
 
 ```
 "Name of the first file"|54321|f2b2c2e4a786d3924b8922454772d784118e6421|8|music|0|0
@@ -38,7 +38,7 @@ make
 ```
 Usage of ./tpb-search:
   -b=800: batch size for indexing
-  -d="torrents_mini.csv": the openbay-db-dump to use
+  -d="torrents_mini.csv.gz": the openbay-db-dump to use
   -h="localhost": http listen host
   -i="tpb.index": index path
   -p=1337: http listen port
