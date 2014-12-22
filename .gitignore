@@ -1,4 +1,5 @@
 *.csv
+*.gz
 thepiratebay-dump-*
 tpb.index
 tpb.index*
