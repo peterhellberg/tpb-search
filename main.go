@@ -14,7 +14,7 @@ import (
 var (
 	port = flag.Int("p", 1337, "http listen port")
 	host = flag.String("h", "localhost", "http listen host")
-	dump = flag.String("d", "torrents_mini.csv", "the openbay-db-dump to use")
+	dump = flag.String("d", "torrents_mini.csv.gz", "the openbay-db-dump to use")
 
 	batchSize  = flag.Int("b", 800, "batch size for indexing")
 	indexLimit = flag.Int("l", 0, "index limit")
