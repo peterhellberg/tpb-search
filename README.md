@@ -24,6 +24,12 @@ It should have the following format when gunzipped:
 "Name of the second file"|9876|27a12d50782e1412bcdec126224da29afb23c293|1|movies|0|0
 ```
 
+You also need to install [LevelDB](https://github.com/google/leveldb)
+
+```
+brew install leveldb
+```
+
 ## Compilation
 
 ```
@@ -50,7 +56,7 @@ Usage of ./tpb-search:
 $ GOMAXPROCS=4 make && ./tpb-search -l 10000
 rm -f tpb-search assets.go
 go-bindata -o assets.go -prefix "assets/" assets/...
-go build -ldflags "-X main.buildCommit `git rev-parse --short HEAD`" -o tpb-search .
+go build -tags leveldb -ldflags "-X main.buildCommit `git rev-parse --short HEAD`" -o tpb-search .
 2014/12/21 04:45:18 Creating new index...
 2014/12/21 04:45:18 Listening on http://localhost:1337
 2014/12/21 04:45:18 Indexing...
