@@ -79,6 +79,7 @@ go build -tags leveldb -ldflags "-X main.buildCommit `git rev-parse --short HEAD
  - [bleve](https://godoc.org/github.com/blevesearch/bleve)
  - [bleve/http](https://godoc.org/github.com/blevesearch/bleve/http)
  - [gorilla/mux](https://godoc.org/github.com/gorilla/mux)
+ - [levigo](github.com/jmhodges/levigo)
 
 ## License
 
